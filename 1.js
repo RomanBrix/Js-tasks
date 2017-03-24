@@ -6,11 +6,13 @@ all positive integers less than or equal to n.
 For example, 5! = 5 x 4 x 3 x 2 x 1 = 120 */
 
 function factorial(n) {
-     if (n != 1) {
+     if (n != 1 && n !== 0) {
        return  n * factorial(n - 1) //сводим уравнение к простейшему виду
+     }else if(n === 0 ){
+         return 1;
      } else {
        return n;
      }
    }
 
-   alert( factorial(5) ); // 120
+   alert( factorial(0) ); // 120
