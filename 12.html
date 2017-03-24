@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+  Write a JavaScript program to add
+  items in an blank array and display the items.
+-->
+<html>
+  <head>
+    <meta charset=utf-8 />
+    <title>Task 12</title>
+  </head>
+  <body>
+    <input type="text" id="text1" /><br>
+    <input type="button" id="btn1" value="Добавить" onclick="add();" />
+    <input type="button" id="btn2" value="Показать" onclick="display();"/>
+    <div id="Result"></div>
+    <script type="text/javascript">
+    /*
+      Write a JavaScript program to add
+      items in an blank array and display the items.
+    */
+      var array = [];
+          div = document.getElementById('Result');
+
+      function add(){
+        var textFieldVal = document.getElementById('text1').value,
+        array.push(textFieldVal);
+      }
+      function display(){
+         var text="";
+         for(var i = 0; i < array.length; i++){
+            text += "<hr>Element: "+ i + " text: " + array[i] + "<br>";
+         }
+         div.innerHTML = text;
+      }
+      /* Вывод работает лучше чем пример из задания
+        в примере постоянно обновляется массив
+        а не дописывается (добавляется)
+        потому в примере на сайте вывод всегда один:
+        Element 0 = x;
+      */
+    </script>
+  </body>
+</html>
