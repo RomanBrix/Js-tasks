@@ -12,7 +12,7 @@ Expected Output :
 */
 
 //
-//  ---- ДОБАВИЛ ОТ СЕБЯ РЕКУРСИЮ -----
+//  
 //
 function last(arr,n) {
         n = n || 1;
