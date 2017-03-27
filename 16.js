@@ -1,3 +1,4 @@
+//Find the leap years in a given range of years.
 function leap(st_year, end_year) {
    var year_range = [];
    for (var i = st_year; i <= end_year; i++) {
