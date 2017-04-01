@@ -1,0 +1,140 @@
+<!doctype html>
+<!--
+Задача DOM
+1.Сделай поле из белых клеточек (клеточка может иметь размер около 28×28 пикселей).
+При клике на клеточку она должна менять цвет на черный. Под таблицей должна быть кнопка «поменять цвета».
+При ее нажатии все цвета клеточек меняются на противоположные.
+Делать поле удобно с помощью элемента <table>. Саму таблицу надо не вставить в исходный код,
+а сгенерировать и добавить в DOM страницы яваскриптом.
+Также сделай возможность что бы можно было вводить количество строчек и столбиков
+-->
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table{
+            /*border: 1px solid black;*/
+            margin: 50px 0 0 50px;
+        }
+        td {
+            border: 1px solid black;
+            width: 28px;
+            height: 28px;
+            text-align: center;
+            cursor: pointer;
+            -moz-user-select: -moz-none;
+            -o-user-select: none;
+            -khtml-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        input{
+            font-size: 14px;
+            margin-left: 15px;
+            min-width: 50px;
+            max-width: 200px;
+            text-align: center;
+            /*display: inherit;*/
+        }
+    </style>
+</head>
+<body>
+
+<input type="text" id="rows" placeholder="rows" style=" ">
+<input type="text" id="columns"  placeholder="columns">
+
+<input type="button" id = "create" value="Create">
+<input type="button" id = "change"  onclick="changeAllColors()" style="display: none;" value="Change All colors">
+
+<script>
+    var btn = document.getElementById('create').addEventListener('click', addTable);
+
+    function addTable() {
+        var body = document.querySelector("body"),
+            numRows = document.getElementById("rows"),
+            numColumns = document.getElementById("columns"),
+            rows = numRows.value,
+            columns = numColumns.value,
+            tr = "",
+            td = "",
+            firstTable = document.querySelector("table"),
+            table = document.createElement("table");
+
+
+        for (var i = 0; i < rows; i++) {
+            tr = document.createElement("tr");
+            for (var j = 0; j < columns; j++) {
+                td = document.createElement("td");
+                td.id = (i + 1) + "_" + (j + 1);
+                text = document.createTextNode((i + 1) + "_" + (j + 1));
+                td.appendChild(text);
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+
+        table.addEventListener('click', changeColor);
+
+        var newBtn = document.getElementById('change');
+        newBtn.style.display = "inline-block";
+
+        if (firstTable == null) {
+            return body.appendChild(table);
+        } else {
+            var newTable = body.appendChild(table);
+            return document.body.replaceChild(newTable, firstTable);
+        }
+    }
+
+
+
+    function changeColor(e) {
+        var src;
+        e = e || window.event;
+        src = e.target || e.srcElement;
+
+        //делегирование событий
+        if (src.nodeName.toLowerCase() !== "td"){
+            return;
+        }
+
+        if(src.style.backgroundColor == "black") {
+            src.style.backgroundColor = "white";
+            src.style.color = "black";
+        } else {
+
+            src.style.backgroundColor = "black";
+            src.style.color = "white";
+        }
+
+
+        //предотворить дальнейшее всплытие события
+        // и
+        // выполнения действия по умолчанию
+        var stopProp = typeof e.stopPropagation,
+            stopDefault = typeof  e.preventDefault();
+        stopProp === "function" ? e.stopPropagation() : console.log("no");
+        stopDefault === "function" ? e.preventDefault() : console.log("no");
+
+
+    }
+
+    function changeAllColors() {
+        var tab = document.querySelector("table");
+        var td = tab.getElementsByTagName('td');
+
+
+        for(var i = 0; i < td.length; i++)
+            if (td[i].style.backgroundColor == "black") {
+                td[i].style.backgroundColor = "white";
+                td[i].style.color = "black";
+            } else {
+
+                td[i].style.backgroundColor = "black";
+                td[i].style.color = "white";
+            }
+
+    }
+</script>
+</body>
+</html>
