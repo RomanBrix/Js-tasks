@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        table{
+        table {
             /*border: 1px solid black;*/
             margin: 50px 0 0 50px;
         }
@@ -27,14 +27,19 @@
             -khtml-user-select: none;
             -webkit-user-select: none;
             user-select: none;
+            /*background-color: red;*/
         }
-        input{
+        input {
             font-size: 14px;
             margin-left: 15px;
             min-width: 50px;
             max-width: 200px;
             text-align: center;
             /*display: inherit;*/
+        }
+        #change {
+            display: none;
+            margin: 25px 0 0 50px;
         }
     </style>
 </head>
@@ -44,45 +49,53 @@
 <input type="text" id="columns"  placeholder="columns">
 
 <input type="button" id = "create" value="Create">
-<input type="button" id = "change"  onclick="changeAllColors()" style="display: none;" value="Change All colors">
+<div id="insertTable"></div>
+<input type="button" id = "change"  style="" value="Change All colors">
 
 <script>
     var btn = document.getElementById('create').addEventListener('click', addTable);
 
     function addTable() {
-        var body = document.querySelector("body"),
-            numRows = document.getElementById("rows"),
-            numColumns = document.getElementById("columns"),
-            rows = numRows.value,
-            columns = numColumns.value,
-            tr = "",
-            td = "",
-            firstTable = document.querySelector("table"),
-            table = document.createElement("table");
+        var numRows     = document.getElementById("rows"),
+            numColumns  = document.getElementById("columns"),
+            rows        = numRows.value,
+            columns     = numColumns.value,
+            tr          = "",
+            td          = "",
+            firstTable  = document.querySelector("table"),
+            table       = document.createElement("table"),
+            newBtn      = document.getElementById('change'),
+            insertTable = document.getElementById('insertTable');
+
+        newBtn.addEventListener('click', changeAllColors);
+        newBtn.style.display = "inline-block";
 
 
-        for (var i = 0; i < rows; i++) {
+        for (var i = 0; i < rows; i += 1) {
             tr = document.createElement("tr");
-            for (var j = 0; j < columns; j++) {
+
+            for (var j = 0; j < columns; j += 1) {
+
                 td = document.createElement("td");
                 td.id = (i + 1) + "_" + (j + 1);
-                text = document.createTextNode((i + 1) + "_" + (j + 1));
+                text = document.createTextNode((i + 1) + "." + (j + 1));
                 td.appendChild(text);
                 tr.appendChild(td);
             }
+
             table.appendChild(tr);
         }
 
         table.addEventListener('click', changeColor);
 
-        var newBtn = document.getElementById('change');
-        newBtn.style.display = "inline-block";
+
+
 
         if (firstTable == null) {
-            return body.appendChild(table);
+            return insertTable.appendChild(table);
         } else {
-            var newTable = body.appendChild(table);
-            return document.body.replaceChild(newTable, firstTable);
+            var newTable = insertTable.appendChild(table);
+            return insertTable.replaceChild(newTable, firstTable);
         }
     }
 
@@ -98,7 +111,7 @@
             return;
         }
 
-        if(src.style.backgroundColor == "black") {
+        if(src.style.backgroundColor === "black") {
             src.style.backgroundColor = "white";
             src.style.color = "black";
         } else {
@@ -119,13 +132,14 @@
 
     }
 
+
     function changeAllColors() {
         var tab = document.querySelector("table");
         var td = tab.getElementsByTagName('td');
 
 
-        for(var i = 0; i < td.length; i++)
-            if (td[i].style.backgroundColor == "black") {
+        for(var i = 0; i < td.length; i += 1)
+            if (td[i].style.backgroundColor === "black") {
                 td[i].style.backgroundColor = "white";
                 td[i].style.color = "black";
             } else {
