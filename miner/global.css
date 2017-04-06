@@ -1,0 +1,30 @@
+table {
+    /*border: 1px solid black;*/
+    margin: 50px 0 0 50px;
+}
+td {
+    border: 1px solid black;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    cursor: pointer;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    background-color: black;
+    font-size: 12px;
+}
+input {
+    font-size: 14px;
+    margin-left: 15px;
+    min-width: 50px;
+    max-width: 200px;
+    text-align: center;
+    /*display: inherit;*/
+}
+#change {
+    display: none;
+    margin: 25px 0 0 50px;
+}
