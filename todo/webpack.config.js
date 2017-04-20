@@ -3,7 +3,7 @@ module.exports= {
     entry: __dirname,
     output: {
         path: path.join(__dirname, 'build'),
-        filename: 'bundel.js'
+        filename: 'main.js'
     },
     watch:true,
     watchOptions:{

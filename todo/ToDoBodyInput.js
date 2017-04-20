@@ -1,7 +1,7 @@
 /**
  * Created by RomanBrix on 4/20/17.
  */
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 
 export default class ToDoBodyInput extends Component {
     constructor(props){
@@ -16,7 +16,7 @@ export default class ToDoBodyInput extends Component {
 
         return (
             <div>
-                <input onBlur={({target})=>{
+                <input onBlur={ ({ target }) => {
                     this.setState({
                         value: target.value
                     })
