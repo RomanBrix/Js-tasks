@@ -8,7 +8,7 @@ export default class todoItem extends Component{
         const { todo, index, deleteToDo, checkOrNo  } = this.props;
         let check = this.props;
         return <p>
-                    { index+1 }: { todo }
+            <label htmlFor={ index }> { index+1 }: { todo } </label>
                     <input id={index}
                            type="checkbox"
                            onClick={()=>{

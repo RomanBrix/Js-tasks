@@ -32,9 +32,17 @@ export default class ToDoBody  extends Component{
     }
 
     checkOrNo(check, index){
+        let elem = document.getElementById(index).parentElement;
         let todos = this.state.todos;
+
         if(todos[index].check !== check) {
             todos[index].check = check;
+        }
+        if(check){
+            elem.style.backgroundColor = 'green';
+        }else {
+            elem.style.backgroundColor = 'orange';
+
         }
         this.setState({ todos });
     }
