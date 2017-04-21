@@ -9534,6 +9534,10 @@ var _ToDoContainer = __webpack_require__(84);
 
 var _ToDoContainer2 = _interopRequireDefault(_ToDoContainer);
 
+var _ToDoHead = __webpack_require__(186);
+
+var _ToDoHead2 = _interopRequireDefault(_ToDoHead);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9561,9 +9565,30 @@ var ToDoBody = function (_Component) {
 
     _createClass(ToDoBody, [{
         key: 'addToDo',
-        value: function addToDo(todo) {
+        value: function addToDo(todo, check) {
             var todos = this.state.todos;
-            todos.push(todo);
+            todos.push({
+                todo: todo,
+                check: check
+            });
+            this.setState({ todos: todos });
+        }
+    }, {
+        key: 'deleteToDo',
+        value: function deleteToDo(val) {
+            var todo = this.state.todos;
+            var todos = todo.filter(function (position) {
+                return position.todo !== val;
+            });
+            this.setState({ todos: todos });
+        }
+    }, {
+        key: 'checkOrNo',
+        value: function checkOrNo(check, index) {
+            var todos = this.state.todos;
+            if (todos[index].check !== check) {
+                todos[index].check = check;
+            }
             this.setState({ todos: todos });
         }
     }, {
@@ -9571,11 +9596,16 @@ var ToDoBody = function (_Component) {
         value: function render() {
             var todos = this.state.todos;
 
+
             return _react2.default.createElement(
                 'div',
                 null,
+                _react2.default.createElement(_ToDoHead2.default, { count: todos.length }),
                 _react2.default.createElement(_ToDoBodyInput2.default, { addToDo: this.addToDo.bind(this) }),
-                _react2.default.createElement(_ToDoContainer2.default, { todos: todos })
+                _react2.default.createElement(_ToDoContainer2.default, { todos: todos,
+                    deleteToDo: this.deleteToDo.bind(this),
+                    checkOrNo: this.checkOrNo.bind(this)
+                })
             );
         }
     }]);
@@ -9659,7 +9689,7 @@ var ToDoBodyInput = function (_Component) {
                 _react2.default.createElement(
                     'button',
                     { onClick: function onClick() {
-                            addToDo(value);
+                            addToDo(value, false);
                         } },
                     'Add ToDo'
                 )
@@ -9716,10 +9746,20 @@ var ToDoBodyInput = function (_Component) {
     _createClass(ToDoBodyInput, [{
         key: 'render',
         value: function render() {
-            var todos = this.props.todos;
+            var _props = this.props,
+                todos = _props.todos,
+                deleteToDo = _props.deleteToDo,
+                checkOrNo = _props.checkOrNo;
 
             var todosContainer = todos.map(function (todo, index) {
-                return _react2.default.createElement(_ToDoItem2.default, { todo: todo, key: index, index: index });
+                return _react2.default.createElement(_ToDoItem2.default, {
+                    deleteToDo: deleteToDo,
+                    checkOrNo: checkOrNo,
+                    todo: todo.todo,
+                    check: todo.check,
+                    key: index,
+                    index: index
+                });
             });
             return _react2.default.createElement(
                 'div',
@@ -9772,19 +9812,34 @@ var todoItem = function (_Component) {
     }
 
     _createClass(todoItem, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _props = this.props,
                 todo = _props.todo,
-                index = _props.index;
+                index = _props.index,
+                deleteToDo = _props.deleteToDo,
+                checkOrNo = _props.checkOrNo;
 
-
+            var check = this.props;
             return _react2.default.createElement(
-                'p',
+                "p",
                 null,
-                index,
-                ': ',
-                todo
+                index + 1,
+                ": ",
+                todo,
+                _react2.default.createElement("input", { id: index,
+                    type: "checkbox",
+                    onClick: function onClick() {
+                        var elem = document.getElementById(index);
+                        checkOrNo(elem.checked, index);
+                    } }),
+                _react2.default.createElement(
+                    "button",
+                    { onClick: function onClick() {
+                            deleteToDo(todo);
+                        } },
+                    " Delete"
+                )
             );
         }
     }]);
@@ -22271,6 +22326,63 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 186 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(20);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by RomanBrix on 4/20/17.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+var toDoBody = function (_Component) {
+    _inherits(toDoBody, _Component);
+
+    function toDoBody() {
+        _classCallCheck(this, toDoBody);
+
+        return _possibleConstructorReturn(this, (toDoBody.__proto__ || Object.getPrototypeOf(toDoBody)).apply(this, arguments));
+    }
+
+    _createClass(toDoBody, [{
+        key: 'render',
+        value: function render() {
+            var count = this.props.count;
+
+            return _react2.default.createElement(
+                'h1',
+                null,
+                'You must do \'',
+                count,
+                '\' tasks'
+            );
+        }
+    }]);
+
+    return toDoBody;
+}(_react.Component);
+
+exports.default = toDoBody;
 
 /***/ })
 /******/ ]);

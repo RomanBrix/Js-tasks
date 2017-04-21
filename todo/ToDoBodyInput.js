@@ -11,8 +11,8 @@ export default class ToDoBodyInput extends Component {
         };
     }
     render() {
-        const {value} = this.state;
-        const {addToDo} = this.props;
+        const { value } = this.state;
+        const { addToDo } = this.props;
 
         return (
             <div>
@@ -22,7 +22,7 @@ export default class ToDoBodyInput extends Component {
                     })
                 }}/>
                 <button onClick={()=>{
-                    addToDo(value);
+                    addToDo(value,false);
                 }}>
                     Add ToDo
                 </button>

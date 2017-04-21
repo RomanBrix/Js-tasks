@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import ToDoBodyInput from './ToDoBodyInput';
 import ToDoContainer from './ToDoContainer';
+import ToDoHead from './ToDoHead';
 
 export default class ToDoBody  extends Component{
     constructor(props){
@@ -12,17 +13,43 @@ export default class ToDoBody  extends Component{
             todos: []
         };
     }
-    addToDo(todo){
+
+    addToDo(todo,check){
         let todos = this.state.todos;
-        todos.push(todo);
+        todos.push({
+            todo,
+            check
+        });
         this.setState({ todos });
     }
+
+    deleteToDo(val){
+        let todo = this.state.todos;
+        let todos = todo.filter((position) => {
+            return position.todo !== val;
+        });
+        this.setState({ todos });
+    }
+
+    checkOrNo(check, index){
+        let todos = this.state.todos;
+        if(todos[index].check !== check) {
+            todos[index].check = check;
+        }
+        this.setState({ todos });
+    }
+
     render(){
         const { todos } = this.state;
+
         return (
             <div>
-                <ToDoBodyInput addToDo={this.addToDo.bind(this)}/>
-                <ToDoContainer todos={ todos }/>
+                <ToDoHead count={ todos.length }/>
+                <ToDoBodyInput addToDo={ this.addToDo.bind(this) }/>
+                <ToDoContainer todos={ todos }
+                               deleteToDo={ this.deleteToDo.bind(this) }
+                               checkOrNo={ this.checkOrNo.bind(this) }
+                />
             </div>
         );
 
