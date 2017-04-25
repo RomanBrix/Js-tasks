@@ -4,6 +4,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ToDoItem  from './ToDoItem';
+import { ADD_TODO, DELETE_TODO, CHECK_TODO, ADD_SUB, CHNG_SUB} from '../constants/ActionTypes'
+
 
 class App extends Component{
 
@@ -30,8 +32,9 @@ class App extends Component{
 
 
     render(){
+
         const { store } = this.props;
-        const todosContainer = store.map((todo)=>{
+        const todosContainer = store.TODOS.map((todo)=>{
             return (
                 <ToDoItem
                     key={todo.id}
@@ -65,20 +68,20 @@ export default connect(
     }),
     dispatch => ({
         onAddToDo: todo => {
-          dispatch({ type: 'ADD', todo})
+          dispatch({ type: ADD_TODO, todo})
         },
         onDeleteToDo: id => {
-            dispatch({ type: 'DELETE', id})
+            dispatch({ type: DELETE_TODO, id})
         },
         onCheck: (id, check) => {
-            dispatch({ type: 'CHECK', check, id})
+            dispatch({ type: CHECK_TODO, check, id})
         },
         onSubTask: (id, todo) => {
-            dispatch({ type: 'ADD_SUB', todo, id})
+            dispatch({ type: ADD_SUB, todo, id})
 
         },
         onSubChange:(id, index, todo)=>{
-            dispatch({ type: 'CHNG_SUB', todo, id, index})
+            dispatch({ type: CHNG_SUB, todo, id, index})
         }
     })
 )(App);

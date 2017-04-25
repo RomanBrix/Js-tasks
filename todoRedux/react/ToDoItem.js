@@ -21,22 +21,20 @@ export default class ToDoItem extends Component{
                     }}
                 > delete </button>
                 <button onClick={
-                    (e)=>{
+                    (e) => {
                         const parent = e.target.parentElement,
                               children = parent.children,
                               child = children[children.length - 1],
                               li = document.createElement("LI"),
                               input = document.createElement("INPUT");
-
-                        child.appendChild(li.appendChild(input));
+                        li.appendChild(input);
+                        child.appendChild(li);
 
 
                         input.onblur = ()=> {
                             subTask(parent.id ,input.value);
                             child.removeChild(child.lastChild);
                         }
-
-
                     }
                 }> add SubTask </button>
                 <SubTask todo = {todo} subTaskChange={subTaskChange}/>

@@ -7,7 +7,6 @@ export default class SubTask extends Component {
     render(){
         const { todo, subTaskChange } = this.props;
         const innit = todo.sub_text.map((elem, index)=>{
-            if(elem.length > 0 && elem.length !== undefined){
             return <li key={index}> { elem }
 
                         <button onClick={(e)=>{
@@ -23,7 +22,7 @@ export default class SubTask extends Component {
                             }
                         }}> change/delete </button>
                     </li>
-        }});
+        });
 
         if(todo.sub_text.length > 0) {
             return <ul className="subClass">
