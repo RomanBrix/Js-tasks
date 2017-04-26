@@ -8,7 +8,7 @@ import SubTask from './SubTask';
 export default class ToDoItem extends Component {
   render() {
     const { todo, checkOrNo, deleteToDo, subTask, subTaskChange } = this.props;
-
+    // console.log("todo is: " + todo.toJS().todo);
     return (
       <li>
         <input
@@ -18,7 +18,7 @@ export default class ToDoItem extends Component {
           }}
         /> {todo.todo}
         <button
-          onClick={(e) => {
+          onClick={() => {
             deleteToDo(todo.id);
           }}
         > delete </button>

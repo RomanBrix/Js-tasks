@@ -5,8 +5,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import ToDoItem from './ToDoItem';
-import { ADD_TODO, DELETE_TODO, CHECK_TODO, ADD_SUB, CHNG_SUB } from '../constants';
+import { ADD_TODO, DELETE_TODO, TOGGLE_CHECK, ADD_SUB, EDIT_SUB } from '../constants';
 // import { addTodos } from '../actions';
 
 class App extends Component {
@@ -35,7 +36,7 @@ class App extends Component {
 
   render() {
     const { todos } = this.props;
-    const todosContainer = todos.map((todo) => {
+    const todosContainer = todos.toJS().map((todo) => {
       return (
         <ToDoItem
           key={todo.id}
@@ -79,19 +80,19 @@ export default connect(mapStateToProps,
           dispatch({ type: DELETE_TODO, id });
         },
         onCheck: (id, check) => {
-          dispatch({ type: CHECK_TODO, check, id });
+          dispatch({ type: TOGGLE_CHECK, check, id });
         },
         onSubTask: (id, todo) => {
           dispatch({ type: ADD_SUB, todo, id });
         },
         onSubChange: (id, index, todo) => {
-          dispatch({ type: CHNG_SUB, todo, id, index });
+          dispatch({ type: EDIT_SUB, todo, id, index });
         }
       });
     })(App);
 
 App.propTypes = {
-  todos: PropTypes.array.isRequired,
+  todos: ImmutablePropTypes.list.isRequired,
   onAddToDo: PropTypes.func.isRequired,
   onDeleteToDo: PropTypes.func.isRequired,
   onCheck: PropTypes.func.isRequired,

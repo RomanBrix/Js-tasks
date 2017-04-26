@@ -9,8 +9,8 @@ export default class SubTask extends Component {
   render() {
     const { todo, subTaskChange } = this.props;
     const innit = todo.sub_text.map((elem, index) => {
+        // console.log(todo.toJS().id);
       return (<li key={shortid.generate()}> { elem }
-
         <button
           onClick={(e) => {
             const input = document.createElement('input');

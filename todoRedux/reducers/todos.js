@@ -1,75 +1,79 @@
-/**
- * Created by RomanBrix on 4/25/17.
- */
 import shortid from 'shortid';
-import { ADD_TODO, DELETE_TODO, CHECK_TODO, ADD_SUB, CHNG_SUB } from '../constants';
-// import Immutable from 'immutable';
+import Immutable from 'immutable';
+import { ADD_TODO, DELETE_TODO, TOGGLE_CHECK, ADD_SUB, EDIT_SUB } from '../constants';
 
-// Immutable.fromJS()
-const initialState = [
+const initialState = Immutable.fromJS([
   {
-    id: shortid.generate(),
+    id: 'test',
     todo: 'task1',
     check: false,
     sub_text: []
   },
   {
-    id: shortid.generate(),
+    id: 'test2',
     todo: 'task2',
     check: false,
     sub: true,
     sub_text: ['text', 'sample']
   }
-];
+]);
+
 export default function todos(state = initialState, action) {
   switch (action.type) {
 
 
     case ADD_TODO :
-      return [
-        ...state,
-        {
-          id: shortid.generate(),
-          todo: action.todo,
-          check: false,
-          sub_text: []
-        }
-
-      ];
+      return state.push(Immutable.fromJS({
+        id: shortid.generate(),
+        todo: action.todo,
+        check: false,
+        sub_text: []
+      }));
 
 
     case DELETE_TODO:
-      return state.filter((todo) => { return todo.id !== action.id; });
+        // action.id
+      return state.filter((todo) => { return todo.get('id') !== action.id; });
 
-
-    case CHECK_TODO:
-      for (const elem of state) {
-        if (elem.id === action.id) {
-          elem.check = action.check;
-        }
-      }
-      return [...state];
+    case TOGGLE_CHECK:
+      const todoIndex = state.findIndex((item) => {
+        return item.get('id') === action.id;
+      });
+      return state.setIn([todoIndex, 'check'], action.check);
 
 
     case ADD_SUB:
-      for (const elem of state) {
-        if (elem.id === action.id) {
-          elem.sub_text.push(action.todo);
-          elem.sub_text = elem.sub_text.filter((val) => { return val.length > 0; });
-        }
-      }
-      return [...state];
+      const subIndex = state.findIndex((item) => {
+        return item.get('id') === action.id;
+      });
 
+      return state.updateIn([subIndex], (item) => {
+        return item.update('sub_text', (items) => {
+          return items.push(action.todo);
+        });
+      });
+// rename
+    case EDIT_SUB:
+      const editIndex = state.findIndex((item) => {
+        return item.get('id') === action.id;
+      });
 
-    case CHNG_SUB:
-      for (const elem of state) {
-        if (elem.id === action.id) {
-          elem.sub_text[action.index] = action.todo;
-          elem.sub_text = elem.sub_text.filter((val) => { return val.length > 0; });
-        }
-      }
-      return [...state];
-
+      return state.updateIn([editIndex], (item) => {
+        const change = item.get('sub_text').map((val, index) => {
+          console.log(val, index, action.index, action.todo);
+          if (index === action.index) {
+            return action.todo;
+          } else {
+            return val;
+          }
+        });
+        const delet = change.filter((val) => {
+          return val.length !== 0;
+        });
+        return item.update('sub_text', (items) => {
+          return items = delet;
+        });
+      });
     default: return state;
   }
 }
