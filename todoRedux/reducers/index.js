@@ -2,8 +2,8 @@
  * Created by RomanBrix on 4/24/17.
  */
 import { combineReducers } from 'redux';
-import TODOS from './TODOS';
+import todos from './todos';
 
 export default combineReducers({
-    TODOS
-})
+  todos
+});

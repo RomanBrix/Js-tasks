@@ -12,6 +12,6 @@ const mountNode = document.getElementById('mountNode');
 const store = createStore(reducer);
 
 render(
-    <Provider store={store}>
-        <App/>
-    </Provider>, mountNode);
+  <Provider store={store}>
+    <App />
+  </Provider>, mountNode);

@@ -12,13 +12,12 @@ module.exports= {
     module: {
 
         rules: [
-            // {
-            //     test: /\.js$/,
-            //     enforce: "pre",
-            //     loader: 'eslint-loader',
-            //     exclude: /node_modules/,
-            //     query: require(path.resolve(__dirname,"eslint.config.js"))
-            // },
+            {
+                test: /\.js$/,
+                enforce: "pre",
+                loader: 'eslint-loader',
+                exclude: /node_modules/,
+            },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
